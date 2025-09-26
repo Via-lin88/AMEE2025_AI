@@ -66,6 +66,47 @@
              border-radius: 0.75rem;
              box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
         }
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .tab-button {
+            padding: 0.75rem 1.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #6b7280;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(249, 229, 154, 0.6);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .tab-button:hover,
+        .tab-button:focus {
+            color: #374151;
+            border-color: #facc15;
+            outline: none;
+            box-shadow: 0 4px 10px -2px rgb(0 0 0 / 0.1);
+        }
+        .tab-button.active {
+            background-color: #facc15;
+            color: #1f2937;
+            border-color: #facc15;
+            box-shadow: 0 6px 12px -4px rgb(250 204 21 / 0.5);
+        }
+        .tab-panel.hidden {
+            display: none;
+        }
+        .tab-section {
+            padding: 2rem 0;
+        }
+        .tab-section + .tab-section {
+            border-top: 1px dashed rgba(107, 114, 128, 0.2);
+            margin-top: 2rem;
+        }
         /* Gantt Chart Specific Optimizations for single-page view */
         .gantt-grid {
             display: grid;
@@ -120,28 +161,17 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-center items-center h-16">
                 <div class="hidden md:flex space-x-8">
-                    <a href="#speaker" class="nav-link text-center">講者介紹</a>
-                    <a href="#content" class="nav-link text-center">課程內容</a>
-                    <a href="#insights" class="nav-link text-center">課程洞察</a>
-                    <a href="#swot" class="nav-link text-center">SWOT分析</a>
-                    <a href="#framework" class="nav-link text-center">導入框架</a>
-                    <a href="#timeline" class="nav-link text-center">導入時程</a>
-                    <a href="#benefits" class="nav-link text-center">預期效益</a>
-                    <a href="#resources" class="nav-link text-center">資源需求</a>
+                    <a href="#hero" class="nav-link text-center">導覽</a>
+                    <a href="#tabbed-content" class="nav-link text-center" data-tab-target="overview">講者與課程</a>
+                    <a href="#tabbed-content" class="nav-link text-center" data-tab-target="implementation">導入規劃</a>
                     <a href="#challenges" class="nav-link text-center">挑戰與對策</a>
                     <a href="#conclusion" class="nav-link text-center">結論</a>
                 </div>
                 <div class="md:hidden">
-                    <select onchange="window.location.hash=this.value" class="bg-transparent border-0 font-semibold text-gray-700 text-center">
+                    <select class="bg-transparent border-0 font-semibold text-gray-700 text-center">
                         <option value="#hero">導覽</option>
-                        <option value="#speaker">講者介紹</option>
-                        <option value="#content">課程內容</option>
-                        <option value="#insights">課程洞察</option>
-                        <option value="#swot">SWOT分析</option>
-                        <option value="#framework">導入框架</option>
-                        <option value="#timeline">導入時程</option>
-                        <option value="#benefits">預期效益</option>
-                        <option value="#resources">資源需求</option>
+                        <option value="#tabbed-content" data-tab-target="overview">講者與課程</option>
+                        <option value="#tabbed-content" data-tab-target="implementation">導入規劃</option>
                         <option value="#challenges">挑戰與對策</option>
                         <option value="#conclusion">結論</option>
                     </select>
@@ -158,266 +188,308 @@
             </div>
         </section>
 
-        <!-- Slide 2: Speaker -->
-        <section id="speaker" class="slide">
-            <div class="fade-in-section w-full max-w-6xl">
-                <div class="card p-8">
-                    <div class="flex flex-col lg:flex-row items-center gap-12">
-                        <!-- Image Column -->
-                        <div class="lg:w-1/3 w-full flex-shrink-0">
-                            <img src="https://placehold.co/400x500/E2E8F0/4A5568?text=Dr.+Adam+Rodman" alt="Dr. Adam Rodman" class="rounded-lg shadow-2xl w-full h-auto object-cover">
-                        </div>
-                        <!-- Content Column -->
-                        <div class="lg:w-2/3 w-full">
-                            <h2 class="heading-serif text-3xl md:text-4xl font-bold">Associate Professor Adam Rodman</h2>
-                            <ul class="mt-6 space-y-4 text-gray-700 text-lg text-left">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 mr-3 mt-1 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span><strong>哈佛醫學院內科副教授</strong></span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 mr-3 mt-1 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span><strong>貝斯以色列女執事醫療中心</strong>擔任內科醫師與醫學教育家。</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 mr-3 mt-1 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span>致力於將 AI 整合進醫學院課程，其研究專長涵蓋<strong>醫學教育、臨床推理</strong>，以及<strong>人機互動</strong>，特別是在 AI 領域。</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 mr-3 mt-1 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span><strong>國際角色</strong>：活躍於 AMEE 等國際醫學教育會議，講座兼具前瞻性與人文關懷。</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+        <!-- Tabbed Content Section -->
+        <section id="tabbed-content" class="slide">
+            <div class="fade-in-section w-full max-w-6xl mx-auto">
+                <div class="tab-buttons" role="tablist" aria-label="課程內容切換">
+                    <button class="tab-button active" data-tab="overview" role="tab" aria-selected="true">講者與課程</button>
+                    <button class="tab-button" data-tab="implementation" role="tab" aria-selected="false">導入規劃</button>
                 </div>
-            </div>
-        </section>
+                <div class="tab-panels space-y-12">
+                    <div class="tab-panel" data-tab-panel="overview">
+                        <section id="speaker" class="tab-section">
+                            <div class="fade-in-section w-full max-w-6xl mx-auto">
+                                <div class="card p-8">
+                                    <div class="flex flex-col lg:flex-row items-center gap-12">
+                                        <!-- Image Column -->
+                                        <div class="lg:w-1/3 w-full flex-shrink-0">
+                                            <img src="https://placehold.co/400x500/E2E8F0/4A5568?text=Dr.+Adam+Rodman" alt="Dr. Adam Rodman" class="rounded-lg shadow-2xl w-full h-auto object-cover">
+                                        </div>
+                                        <!-- Content Column -->
+                                        <div class="lg:w-2/3 w-full">
+                                            <h2 class="heading-serif text-3xl md:text-4xl font-bold">Associate Professor Adam Rodman</h2>
+                                            <ul class="mt-6 space-y-4 text-gray-700 text-lg text-left">
+                                                <li class="flex items-start">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 mr-3 mt-1 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span><strong>哈佛醫學院內科副教授</strong></span>
+                                                </li>
+                                                <li class="flex items-start">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 mr-3 mt-1 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span><strong>貝斯以色列女執事醫療中心</strong>擔任內科醫師與醫學教育家。</span>
+                                                </li>
+                                                <li class="flex items-start">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 mr-3 mt-1 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span>致力於將 AI 整合進醫學院課程，其研究專長涵蓋<strong>醫學教育、臨床推理</strong>，以及<strong>人機互動</strong>，特別是在 AI 領域。</span>
+                                                </li>
+                                                <li class="flex items-start">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500 mr-3 mt-1 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span><strong>國際角色</strong>：活躍於 AMEE 等國際醫學教育會議，講座兼具前瞻性與人文關懷。</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="content" class="tab-section">
+                            <div class="fade-in-section w-full max-w-6xl mx-auto">
+                                <h2 class="text-4xl font-bold text-center mb-8">課程內容主軸與內容</h2>
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    <div class="card p-6 space-y-4">
+                                        <h3 class="heading-serif font-bold text-xl">AI 的指數級發展與普及</h3>
+                                        <p class="text-gray-600 text-base">教授指出，與過去的醫療技術相比，LLMs 的普及速度極快。數據顯示，近半數醫學生已在使用，頻率甚至高於教科書或請教教授。</p>
+                                    </div>
+                                    <div class="card p-6 space-y-4">
+                                        <h3 class="heading-serif font-bold text-xl">AI 的「超人」表現與機會</h3>
+                                        <p class="text-gray-600 text-base">「推理模型」在複雜臨床情境中表現已超越人類醫師。AI 為醫學教育帶來四大機會：提升效率、個人化教學、改善回饋、精準教育。</p>
+                                    </div>
+                                    <div class="card p-6 space-y-4 border-t-4 border-red-500">
+                                        <h3 class="heading-serif font-bold text-xl text-red-700">最嚴峻的挑戰—認知去技能化</h3>
+                                        <p class="text-gray-600 text-base">最大的風險是醫師因過度依賴 AI 喪失核心能力。研究證實，內視鏡醫師在使用 AI 輔助僅三個月後，獨立診斷能力就顯著下降。</p>
+                                    </div>
+                                    <div class="card p-6 space-y-4 border-t-4 border-blue-500">
+                                        <h3 class="heading-serif font-bold text-xl text-blue-700">教育者的抉擇—帕斯卡賭注</h3>
+                                        <p class="text-gray-600 text-base">唯一理性的選擇是「假設 AI 將是強大的輔助工具」，並立即改革教育，培養能與 AI 協作、同時保有獨立判斷力的醫師。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="insights" class="tab-section">
+                            <div class="fade-in-section w-full max-w-4xl mx-auto">
+                                <h2 class="text-4xl font-bold text-center mb-12">課程洞察</h2>
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif font-bold text-xl mb-2">急迫性遠超預期</h3>
+                                        <p class="text-gray-600 text-base">AI 已是現在進行式，教學方針若未跟上，將放任認知去技能化風險蔓延。</p>
+                                    </div>
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif font-bold text-xl mb-2">教育焦點的轉移</h3>
+                                        <p class="text-gray-600 text-base">核心必須從「知識傳授」轉向「後設認知能力的培養」，如批判性思考與驗證。</p>
+                                    </div>
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif font-bold text-xl mb-2">風險與機會並存</h3>
+                                        <p class="text-gray-600 text-base">AI 既是風險也是機會，關鍵在於我們如何設計制度去駕馭它。</p>
+                                    </div>
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif font-bold text-xl mb-2">帕斯卡賭注的戰略價值</h3>
+                                        <p class="text-gray-600 text-base">投資醫教改革是應對未來不確定性的必要戰略避險。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="tab-panel hidden" data-tab-panel="implementation">
+                        <section id="swot" class="tab-section">
+                            <div class="fade-in-section w-full max-w-5xl mx-auto">
+                                <h2 class="text-3xl font-bold text-center mb-8">奇美醫院現況分析 (SWOT)</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="card p-4 border-t-4 border-green-400">
+                                        <h3 class="heading-serif font-bold text-lg text-green-700 mb-2">優勢 (Strengths)</h3>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-base">
+                                            <li>具備改革契機與高層支持（「健康臺灣深耕計劃」）</li>
+                                            <li>已意識到住院醫師離職率高、素質不穩等核心問題</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card p-4 border-t-4 border-red-400">
+                                        <h3 class="heading-serif font-bold text-lg text-red-700 mb-2">劣勢 (Weaknesses)</h3>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-base">
+                                            <li>師資教學負荷過重，缺乏創新精力</li>
+                                            <li>現有教學與評量方式傳統</li>
+                                            <li>對 AI 應用與風險可能缺乏全院共識</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card p-4 border-t-4 border-blue-400">
+                                        <h3 class="heading-serif font-bold text-lg text-blue-700 mb-2">機會 (Opportunities)</h3>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-base">
+                                            <li>彎道超車，建立全國醫教領導品牌</li>
+                                            <li>應用 AI 提升師資效率，改善當前困境</li>
+                                            <li>利用 AI 數據分析，實現精準培育</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card p-4 border-t-4 border-yellow-400">
+                                        <h3 class="heading-serif font-bold text-lg text-yellow-700 mb-2">威脅 (Threats)</h3>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-base">
+                                            <li>認知去技能化將惡化「素質不優」問題</li>
+                                            <li>其他醫學中心的創新將加劇人才流失</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="framework" class="tab-section">
+                            <div class="fade-in-section w-full max-w-5xl mx-auto">
+                                <h2 class="text-4xl font-bold text-center mb-12">導入理論與框架</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif text-xl font-bold mb-3">頂層戰略思維</h3>
+                                        <p class="text-base text-gray-600">以 Rodman 的「帕斯卡賭注」與高層溝通，強調改革是關乎未來的「必要投資」。</p>
+                                    </div>
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif text-xl font-bold mb-3">組織變革框架</h3>
+                                        <p class="text-base text-gray-600">以 Kotter 的「變革管理八大步驟」為路徑圖，系統性引導全院參與變革。</p>
+                                    </div>
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif text-xl font-bold mb-3">教育實踐框架</h3>
+                                        <p class="text-base text-gray-600">在 CBME 基礎上，新增「AI 協作與批判性思維」為核心能力。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="timeline" class="tab-section">
+                            <div class="fade-in-section w-full max-w-6xl mx-auto">
+                                <h2 class="text-4xl font-bold text-center mb-10">導入時程 (Gantt Chart)</h2>
+                                <div class="card p-6">
+                                    <div class="gantt-grid">
+                                        <div class="gantt-header"></div>
+                                        <div class="gantt-header">Q1</div>
+                                        <div class="gantt-header">Q2</div>
+                                        <div class="gantt-header">Q3</div>
+                                        <div class="gantt-header">Q4</div>
+                                        <div class="gantt-header">Q5</div>
+                                        <div class="gantt-header">Q6</div>
+                                        <div class="gantt-header">Q7</div>
+                                        <div class="gantt-header">Q8</div>
+                                        <div class="gantt-header">Q9</div>
 
-        <!-- Slide 3: Content -->
-        <section id="content" class="slide">
-            <div class="fade-in-section w-full max-w-6xl">
-                <h2 class="text-4xl font-bold text-center mb-8">課程內容主軸與內容</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="card p-6 space-y-4">
-                        <h3 class="heading-serif font-bold text-xl">AI 的指數級發展與普及</h3>
-                        <p class="text-gray-600 text-base">教授指出，與過去的醫療技術相比，LLMs 的普及速度極快。數據顯示，近半數醫學生已在使用，頻率甚至高於教科書或請教教授。</p>
-                    </div>
-                    <div class="card p-6 space-y-4">
-                        <h3 class="heading-serif font-bold text-xl">AI 的「超人」表現與機會</h3>
-                        <p class="text-gray-600 text-base">「推理模型」在複雜臨床情境中表現已超越人類醫師。AI 為醫學教育帶來四大機會：提升效率、個人化教學、改善回饋、精準教育。</p>
-                    </div>
-                    <div class="card p-6 space-y-4 border-t-4 border-red-500">
-                        <h3 class="heading-serif font-bold text-xl text-red-700">最嚴峻的挑戰—認知去技能化</h3>
-                        <p class="text-gray-600 text-base">最大的風險是醫師因過度依賴 AI 喪失核心能力。研究證實，內視鏡醫師在使用 AI 輔助僅三個月後，獨立診斷能力就顯著下降。</p>
-                    </div>
-                    <div class="card p-6 space-y-4 border-t-4 border-blue-500">
-                        <h3 class="heading-serif font-bold text-xl text-blue-700">教育者的抉擇—帕斯卡賭注</h3>
-                        <p class="text-gray-600 text-base">唯一理性的選擇是「假設 AI 將是強大的輔助工具」，並立即改革教育，培養能與 AI 協作、同時保有獨立判斷力的醫師。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                                        <div class="gantt-phase-name text-amber-700 bg-amber-100">第一階段：策略啟動 (2025 Q1 - Q2)</div>
+                                        <div class="gantt-task-name">成立專案辦公室與諮詢委員會</div>
+                                        <div class="gantt-task-bar gantt-bar-p1 col-span-2">專案架構建立</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
 
-        <!-- Slide 4: Insights -->
-        <section id="insights" class="slide">
-            <div class="fade-in-section w-full max-w-4xl">
-                <h2 class="text-4xl font-bold text-center mb-12">課程洞察</h2>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif font-bold text-xl mb-2">急迫性遠超預期</h3>
-                        <p class="text-gray-600 text-base">AI 已是現在進行式，教學方針若未跟上，將放任認知去技能化風險蔓延。</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif font-bold text-xl mb-2">教育焦點的轉移</h3>
-                        <p class="text-gray-600 text-base">核心必須從「知識傳授」轉向「後設認知能力的培養」，如批判性思考與驗證。</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif font-bold text-xl mb-2">風險與機會並存</h3>
-                        <p class="text-gray-600 text-base">AI 既是風險也是機會，關鍵在於我們如何設計制度去駕馭它。</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif font-bold text-xl mb-2">帕斯卡賭注的戰略價值</h3>
-                        <p class="text-gray-600 text-base">投資醫教改革是應對未來不確定性的必要戰略避險。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                                        <div class="gantt-task-name">需求盤點與風險評估</div>
+                                        <div class="gantt-task-bar gantt-bar-p1 col-span-2">完成需求訪談與風險矩陣</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
 
-        <!-- Slide 5: SWOT -->
-        <section id="swot" class="slide">
-            <div class="fade-in-section w-full max-w-5xl">
-                <h2 class="text-3xl font-bold text-center mb-8">奇美醫院現況分析 (SWOT)</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="card p-4 border-t-4 border-green-400">
-                        <h3 class="heading-serif font-bold text-lg text-green-700 mb-2">優勢 (Strengths)</h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-base">
-                            <li>具備改革契機與高層支持（「健康臺灣深耕計劃」）</li>
-                            <li>已意識到住院醫師離職率高、素質不穩等核心問題</li>
-                        </ul>
-                    </div>
-                    <div class="card p-4 border-t-4 border-red-400">
-                        <h3 class="heading-serif font-bold text-lg text-red-700 mb-2">劣勢 (Weaknesses)</h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-base">
-                            <li>師資教學負荷過重，缺乏創新精力</li>
-                            <li>現有教學與評量方式傳統</li>
-                            <li>對 AI 應用與風險可能缺乏全院共識</li>
-                        </ul>
-                    </div>
-                    <div class="card p-4 border-t-4 border-blue-400">
-                        <h3 class="heading-serif font-bold text-lg text-blue-700 mb-2">機會 (Opportunities)</h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-base">
-                            <li>彎道超車，建立全國醫教領導品牌</li>
-                            <li>應用 AI 提升師資效率，改善當前困境</li>
-                            <li>利用 AI 數據分析，實現精準培育</li>
-                        </ul>
-                    </div>
-                    <div class="card p-4 border-t-4 border-yellow-400">
-                        <h3 class="heading-serif font-bold text-lg text-yellow-700 mb-2">威脅 (Threats)</h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-1 text-base">
-                            <li>認知去技能化將惡化「素質不優」問題</li>
-                            <li>其他醫學中心的創新將加劇人才流失</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+                                        <div class="gantt-phase-name text-emerald-700 bg-emerald-100">第二階段：設計與試點 (2025 Q3 - 2026 Q2)</div>
+                                        <div class="gantt-task-name">AI 教學框架設計</div>
+                                        <div></div>
+                                        <div class="gantt-task-bar gantt-bar-p2 col-span-3">框架與課程模組定案</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
 
-        <!-- Slide 6: Framework -->
-        <section id="framework" class="slide">
-            <div class="fade-in-section w-full max-w-5xl">
-                <h2 class="text-4xl font-bold text-center mb-12">導入理論與框架</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif text-xl font-bold mb-3">頂層戰略思維</h3>
-                        <p class="text-base text-gray-600">以 Rodman 的「帕斯卡賭注」與高層溝通，強調改革是關乎未來的「必要投資」。</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif text-xl font-bold mb-3">組織變革框架</h3>
-                        <p class="text-base text-gray-600">以 Kotter 的「變革管理八大步驟」為路徑圖，系統性引導全院參與變革。</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif text-xl font-bold mb-3">教育實踐框架</h3>
-                        <p class="text-base text-gray-600">在 CBME 基礎上，新增「AI 協作與批判性思維」為核心能力。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Slide 7: Timeline -->
-        <section id="timeline" class="slide">
-            <div class="fade-in-section w-full max-w-6xl">
-                <h2 class="text-4xl font-bold text-center mb-12">導入時程甘特圖 (三年計畫)</h2>
-                <div class="card p-6 overflow-x-auto">
-                    <div class="gantt-grid min-w-[1000px]">
-                        <!-- Header -->
-                        <div class="gantt-header col-start-1"></div>
-                        <div class="gantt-header font-bold col-span-4 border-b-2 border-gray-300">第一年</div>
-                        <div class="gantt-header font-bold col-span-4 border-b-2 border-gray-300">第二年</div>
-                        <div class="gantt-header font-bold col-span-1 border-b-2 border-gray-300">第三年</div>
-                        
-                        <div class="gantt-header text-sm text-gray-500">任務</div>
-                        <div class="gantt-header text-sm text-gray-500">Q1</div>
-                        <div class="gantt-header text-sm text-gray-500">Q2</div>
-                        <div class="gantt-header text-sm text-gray-500">Q3</div>
-                        <div class="gantt-header text-sm text-gray-500">Q4</div>
-                        <div class="gantt-header text-sm text-gray-500">Q1</div>
-                        <div class="gantt-header text-sm text-gray-500">Q2</div>
-                        <div class="gantt-header text-sm text-gray-500">Q3</div>
-                        <div class="gantt-header text-sm text-gray-500">Q4</div>
-                        <div class="gantt-header text-sm text-gray-500">全年</div>
-                        
-                        <!-- Phase 1 -->
-                        <div class="gantt-phase-name bg-yellow-100 text-yellow-800">第一階段：奠基與啟動</div>
-                        <div class="gantt-task-name">成立 AI 推動小組</div>
-                        <div class="gantt-task-bar gantt-bar-p1" style="grid-column: 2 / 3;"></div>
-                        <div class="gantt-task-name">現況盤點</div>
-                        <div class="gantt-task-bar gantt-bar-p1" style="grid-column: 2 / 4;"></div>
-                        <div class="gantt-task-name">高階主管共識營</div>
-                        <div class="gantt-task-bar gantt-bar-p1" style="grid-column: 3 / 4;"></div>
+                                        <div class="gantt-task-name">教師培力與種子師資</div>
+                                        <div></div>
+                                        <div class="gantt-task-bar gantt-bar-p2 col-span-4">核心師資工作坊與共備</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
 
-                        <!-- Phase 2 -->
-                        <div class="gantt-phase-name bg-emerald-100 text-emerald-800">第二階段：試點與發展</div>
-                        <div class="gantt-task-name">AI 輔助 OSCE 評分 (試點)</div>
-                        <div class="gantt-task-bar gantt-bar-p2" style="grid-column: 4 / 6;">效率提升</div>
-                        <div class="gantt-task-name">提供 VS AI 文書工具</div>
-                        <div class="gantt-task-bar gantt-bar-p2" style="grid-column: 6 / 8;"></div>
-                        <div class="gantt-task-name">開設 AI 教學師培課程</div>
-                        <div class="gantt-task-bar gantt-bar-p2" style="grid-column: 6 / 9;">師資培育</div>
-                        <div class="gantt-task-name">設計防去技能化課程</div>
-                        <div class="gantt-task-bar gantt-bar-p2" style="grid-column: 8 / 11;"></div>
-                        
-                        <!-- Phase 3 -->
-                        <div class="gantt-phase-name bg-orange-100 text-orange-800">第三階段：全面推行與整合</div>
-                        <div class="gantt-task-name">AI 協作納入 CBME</div>
-                        <div class="gantt-task-bar gantt-bar-p3" style="grid-column: 9 / 11;"></div>
-                        <div class="gantt-task-name">全面推廣 AI 工具</div>
-                        <div class="gantt-task-bar gantt-bar-p3" style="grid-column: 10 / 11;"></div>
+                                        <div class="gantt-task-name">AI 工具整合與試點課程</div>
+                                        <div></div>
+                                        <div class="gantt-task-bar gantt-bar-p2 col-span-4">選定科別試行</div>
+                                        <div class="gantt-task-bar gantt-bar-p2 col-span-2">擴大試點</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
 
-                        <!-- Phase 4 -->
-                        <div class="gantt-phase-name bg-purple-100 text-purple-800">第四階段：持續優化</div>
-                        <div class="gantt-task-name">建立成效追蹤儀表板</div>
-                        <div class="gantt-task-bar gantt-bar-p4" style="grid-column: 8 / 11;">持續</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                                        <div class="gantt-phase-name text-orange-700 bg-orange-100">第三階段：全面擴散 (2026 Q3 - 2027 Q2)</div>
+                                        <div class="gantt-task-name">課程全面導入</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div class="gantt-task-bar gantt-bar-p3 col-span-4">納入 R1-R3 培訓</div>
+                                        <div class="gantt-task-bar gantt-bar-p3 col-span-2">納入 PGY</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
 
-        <!-- Slide 8: Benefits -->
-        <section id="benefits" class="slide">
-            <div class="fade-in-section w-full max-w-6xl">
-                <h2 class="text-4xl font-bold text-center mb-12">預期效益</h2>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="card p-6">
-                        <h3 class="heading-serif font-bold text-xl mb-3">住院醫師層面</h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 text-base">
-                            <li>成為能駕馭 AI 的「增強型醫師」</li>
-                            <li>減輕行政負擔，提升滿意度，降低離職率</li>
-                        </ul>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="heading-serif font-bold text-xl mb-3">主治醫師 (師資) 層面</h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 text-base">
-                            <li>減輕評分、備課等行政負擔</li>
-                            <li>提升自身在 AI 時代的教學能力</li>
-                        </ul>
-                    </div>
-                    <div class="card p-6">
-                        <h3 class="heading-serif font-bold text-xl mb-3">醫院層面</h3>
-                        <ul class="list-disc list-inside text-gray-700 space-y-2 text-base">
-                            <li>從根本提升醫療品質與病人安全</li>
-                            <li>建立「未來醫師培育搖籃」的領導品牌</li>
-                            <li>有效落實「健康臺灣深耕計劃」</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+                                        <div class="gantt-task-name">AI 與臨床流程整合</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div class="gantt-task-bar gantt-bar-p3 col-span-4">臨床決策支援整合</div>
+                                        <div class="gantt-task-bar gantt-bar-p3 col-span-2">資料回饋系統建置</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
 
-        <!-- Slide 9: Resources -->
-        <section id="resources" class="slide">
-            <div class="fade-in-section w-full max-w-6xl">
-                <h2 class="text-4xl font-bold text-center mb-12">資源需求</h2>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif font-bold text-xl mb-2">人力資源</h3>
-                        <p class="text-base text-gray-600">教學部專案小組、資訊室專人支援、保障教師公務時間</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif font-bold text-xl mb-2">財務資源</h3>
-                         <p class="text-base text-gray-600">AI 軟體授權費、師資培育費用、硬體與資安預算</p>
-                    </div>
-                    <div class="card p-6 text-center">
-                        <h3 class="heading-serif font-bold text-xl mb-2">技術資源</h3>
-                        <p class="text-base text-gray-600">合規安全的 AI 平台、教學成效數據庫與分析工具</p>
+                                        <div class="gantt-phase-name text-purple-700 bg-purple-100">第四階段：成效優化 (2027 Q3 - 2027 Q4)</div>
+                                        <div class="gantt-task-name">成效評估與迭代</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div class="gantt-task-bar gantt-bar-p4 col-span-3">評估報告與調整方案</div>
+                                        <div class="gantt-task-bar gantt-bar-p4 col-span-2">成果分享與標竿學習</div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="benefits" class="tab-section">
+                            <div class="fade-in-section w-full max-w-6xl mx-auto">
+                                <h2 class="text-4xl font-bold text-center mb-12">預期效益</h2>
+                                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div class="card p-6">
+                                        <h3 class="heading-serif font-bold text-xl mb-3">學習者 (住院醫師) 層面</h3>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-2 text-base">
+                                            <li>個人化回饋提升臨床推理能力</li>
+                                            <li>養成 AI 協作素養，避免去技能化</li>
+                                            <li>減輕行政負擔，提升滿意度，降低離職率</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card p-6">
+                                        <h3 class="heading-serif font-bold text-xl mb-3">主治醫師 (師資) 層面</h3>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-2 text-base">
+                                            <li>減輕評分、備課等行政負擔</li>
+                                            <li>提升自身在 AI 時代的教學能力</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card p-6">
+                                        <h3 class="heading-serif font-bold text-xl mb-3">醫院層面</h3>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-2 text-base">
+                                            <li>從根本提升醫療品質與病人安全</li>
+                                            <li>建立「未來醫師培育搖籃」的領導品牌</li>
+                                            <li>有效落實「健康臺灣深耕計劃」</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section id="resources" class="tab-section">
+                            <div class="fade-in-section w-full max-w-6xl mx-auto">
+                                <h2 class="text-4xl font-bold text-center mb-12">資源需求</h2>
+                                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif font-bold text-xl mb-2">人力資源</h3>
+                                        <p class="text-base text-gray-600">教學部專案小組、資訊室專人支援、保障教師公務時間</p>
+                                    </div>
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif font-bold text-xl mb-2">財務資源</h3>
+                                         <p class="text-base text-gray-600">AI 軟體授權費、師資培育費用、硬體與資安預算</p>
+                                    </div>
+                                    <div class="card p-6 text-center">
+                                        <h3 class="heading-serif font-bold text-xl mb-2">技術資源</h3>
+                                        <p class="text-base text-gray-600">合規安全的 AI 平台、教學成效數據庫與分析工具</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -460,40 +532,118 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                    } else {
-                        // Optional: remove class when not visible to re-trigger animation
-                        // entry.target.classList.remove('is-visible');
                     }
                 });
             }, {
-                threshold: 0.25 // Trigger when 25% of the element is visible
+                threshold: 0.25
             });
-            sections.forEach(section => {
-                observer.observe(section);
+            sections.forEach(section => observer.observe(section));
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('[data-tab-panel]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const tabNavLinks = document.querySelectorAll('.nav-link[data-tab-target]');
+            const dropdown = document.querySelector('nav select');
+            let activeTab = 'overview';
+            let currentSectionId = null;
+            let isTabSectionInView = false;
+
+            function updateNavHighlight() {
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    const tabTarget = link.dataset.tabTarget;
+                    if (tabTarget) {
+                        link.classList.toggle('active', isTabSectionInView && tabTarget === activeTab);
+                    } else if (href === `#${currentSectionId}`) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+
+            function updateDropdown() {
+                if (!dropdown) return;
+                if (isTabSectionInView) {
+                    dropdown.value = '#tabbed-content';
+                } else if (currentSectionId) {
+                    dropdown.value = `#${currentSectionId}`;
+                }
+            }
+
+            function setActiveTab(tab) {
+                activeTab = tab;
+                tabButtons.forEach(button => {
+                    const isActive = button.dataset.tab === tab;
+                    button.classList.toggle('active', isActive);
+                    button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                });
+                tabPanels.forEach(panel => {
+                    const isActive = panel.dataset.tabPanel === tab;
+                    panel.classList.toggle('hidden', !isActive);
+                });
+                updateNavHighlight();
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => setActiveTab(button.dataset.tab));
             });
 
-            const navLinks = document.querySelectorAll('.nav-link');
+            tabNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const target = link.dataset.tabTarget;
+                    if (target) {
+                        setActiveTab(target);
+                    }
+                });
+            });
+
+            if (dropdown) {
+                dropdown.addEventListener('change', event => {
+                    const selectedOption = event.target.selectedOptions[0];
+                    if (!selectedOption) return;
+                    const tabTarget = selectedOption.dataset.tabTarget;
+                    if (tabTarget) {
+                        setActiveTab(tabTarget);
+                    }
+                    const value = selectedOption.value;
+                    if (value) {
+                        window.location.hash = value;
+                    }
+                });
+            }
+
             const navObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id');
-                        navLinks.forEach(link => {
-                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-                        });
-                        // Also update the dropdown for mobile
-                        const dropdown = document.querySelector('nav select');
-                        if (dropdown) {
-                            dropdown.value = `#${id}`;
+                    const id = entry.target.getAttribute('id');
+                    if (id === 'tabbed-content') {
+                        if (entry.isIntersecting) {
+                            isTabSectionInView = true;
+                            currentSectionId = id;
+                        } else {
+                            isTabSectionInView = false;
+                            if (currentSectionId === id) {
+                                currentSectionId = null;
+                            }
                         }
+                    } else if (entry.isIntersecting) {
+                        currentSectionId = id;
+                    } else if (currentSectionId === id) {
+                        currentSectionId = null;
                     }
                 });
+                updateNavHighlight();
+                updateDropdown();
             }, {
-                rootMargin: "-50% 0px -50% 0px"
+                rootMargin: '-50% 0px -50% 0px'
             });
 
-            document.querySelectorAll('section[id]').forEach(section => {
+            document.querySelectorAll('#presentation-container > section[id]').forEach(section => {
                 navObserver.observe(section);
             });
+
+            setActiveTab(activeTab);
+            updateDropdown();
         });
     </script>
 </body>
